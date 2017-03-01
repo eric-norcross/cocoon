@@ -60,7 +60,7 @@ describe Cocoon do
           @html = @tester.link_to_add_association('add something', @form_obj, :comments, {:class => 'something silly'})
         end
 
-        it_behaves_like "a correctly rendered add link", {class: 'something silly add_fields' }
+        it_behaves_like "a correctly rendered add link", {class: 'something silly add-fields' }
       end
 
       context "and explicitly specifying the wanted partial" do
@@ -123,7 +123,7 @@ describe Cocoon do
             "some long name"
           end
         end
-        it_behaves_like "a correctly rendered add link", {class: 'floppy disk add_fields', text: 'some long name'}
+        it_behaves_like "a correctly rendered add link", {class: 'floppy disk add-fields', text: 'some long name'}
       end
 
       context "accepts extra attributes and pass them to link_to" do
@@ -133,7 +133,7 @@ describe Cocoon do
               "some long name"
             end
           end
-          it_behaves_like "a correctly rendered add link", {class: 'floppy disk add_fields', text: 'some long name', :extra_attributes => {'data-something' => 'bla'}}
+          it_behaves_like "a correctly rendered add link", {class: 'floppy disk add-fields', text: 'some long name', :extra_attributes => {'data-something' => 'bla'}}
         end
         if Rails.rails4?
           context 'when using the new notation' do
@@ -142,7 +142,7 @@ describe Cocoon do
                 "some long name"
               end
             end
-            it_behaves_like "a correctly rendered add link", {class: 'floppy disk add_fields', text: 'some long name', :extra_attributes => {'data-association-something' => 'foobar'}}
+            it_behaves_like "a correctly rendered add link", {class: 'floppy disk add-fields', text: 'some long name', :extra_attributes => {'data-association-something' => 'foobar'}}
           end
         end
       end
@@ -156,7 +156,7 @@ describe Cocoon do
           end
         end
 
-        it_behaves_like "a correctly rendered add link", {class: 'floppy disk add_fields', template: "partiallll", text: 'some long name'}
+        it_behaves_like "a correctly rendered add link", {class: 'floppy disk add-fields', template: "partiallll", text: 'some long name'}
       end
     end
 
@@ -211,7 +211,7 @@ describe Cocoon do
         end
         it_behaves_like "a correctly rendered add link", {template: 'partiallll', association: 'person', associations: 'people' }
 
-        #result.to_s.should == '<a href="#" class="add_fields" data-association-insertion-template="partiallll" data-association="person" data-associations="people">add something</a>'
+        #result.to_s.should == '<a href="#" class="add-fields" data-association-insertion-template="partiallll" data-association="person" data-associations="people">add something</a>'
       end
     end
 
@@ -313,9 +313,9 @@ describe Cocoon do
 
       context "accepts html options and pass them to link_to" do
         before do
-          @html = @tester.link_to_remove_association('remove something', @form_obj, {:class => 'add_some_class', :'data-something' => 'bla'})
+          @html = @tester.link_to_remove_association('remove something', @form_obj, {:class => 'add-some-class', :'data-something' => 'bla'})
         end
-        it_behaves_like "a correctly rendered remove link", {class: 'add_some_class remove_fields dynamic', extra_attributes: {'data-something' => 'bla'}}
+        it_behaves_like "a correctly rendered remove link", {class: 'add-some-class remove-fields dynamic', extra_attributes: {'data-something' => 'bla'}}
       end
 
     end
@@ -338,7 +338,7 @@ describe Cocoon do
         expect(removed.attribute('value').value).to eq("true")
       end
 
-      it_behaves_like "a correctly rendered remove link", {class: 'remove_fields dynamic destroyed'}
+      it_behaves_like "a correctly rendered remove link", {class: 'remove-fields dynamic destroyed'}
     end
 
     context "with a block" do
@@ -353,11 +353,11 @@ describe Cocoon do
 
       context "accepts html options and pass them to link_to" do
         before do
-          @html = @tester.link_to_remove_association(@form_obj, {:class => 'add_some_class', :'data-something' => 'bla'}) do
+          @html = @tester.link_to_remove_association(@form_obj, {:class => 'add-some-class', :'data-something' => 'bla'}) do
             "remove some long name"
           end
         end
-        it_behaves_like "a correctly rendered remove link", {text: 'remove some long name', class: 'add_some_class remove_fields dynamic', extra_attributes: {'data-something' => 'bla'}}
+        it_behaves_like "a correctly rendered remove link", {text: 'remove some long name', class: 'add-some-class remove-fields dynamic', extra_attributes: {'data-something' => 'bla'}}
       end
     end
 

@@ -29,7 +29,7 @@ module Cocoon
         is_dynamic = f.object.new_record?
 
         classes = []
-        classes << "remove_fields"
+        classes << "remove-fields"
         classes << (is_dynamic ? 'dynamic' : 'existing')
         classes << 'destroyed' if f.object.marked_for_destruction?
         html_options[:class] = [html_options[:class], classes.join(' ')].compact.join(' ')
@@ -88,7 +88,7 @@ module Cocoon
         form_parameter_name = html_options.delete(:form_name) || 'f'
         count = html_options.delete(:count).to_i
 
-        html_options[:class] = [html_options[:class], "add_fields"].compact.join(' ')
+        html_options[:class] = [html_options[:class], "add-fields"].compact.join(' ')
         html_options[:'data-association'] = association.to_s.singularize
         html_options[:'data-associations'] = association.to_s.pluralize
 

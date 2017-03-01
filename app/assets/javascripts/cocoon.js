@@ -1,16 +1,16 @@
 (function($) {
 
-  var cocoon_element_counter = 0;
+  var cocoonElementCounter = 0;
 
-  var create_new_id = function() {
-    return (new Date().getTime() + cocoon_element_counter++);
+  var createNewId = function() {
+    return (new Date().getTime() + cocoonElementCounter++);
   }
 
-  var newcontent_braced = function(id) {
+  var newContentBraced = function(id) {
     return '[' + id + ']$1';
   }
 
-  var newcontent_underscord = function(id) {
+  var newContentUnderscord = function(id) {
     return '_' + id + '_$1';
   }
 
@@ -37,7 +37,7 @@
 
   }
 
-  $(document).on('click', '.add_fields', function(e) {
+  $(document).on('click', '.add-fields', function(e) {
     e.preventDefault();
     var $this                 = $(this),
         assoc                 = $this.data('association'),
@@ -47,30 +47,30 @@
         insertionNode         = $this.data('association-insertion-node'),
         insertionTraversal    = $this.data('association-insertion-traversal'),
         count                 = parseInt($this.data('count'), 10),
-        regexp_braced         = new RegExp('\\[new_' + assoc + '\\](.*?\\s)', 'g'),
-        regexp_underscord     = new RegExp('_new_' + assoc + '_(\\w*)', 'g'),
-        new_id                = create_new_id(),
-        new_content           = content.replace(regexp_braced, newcontent_braced(new_id)),
-        new_contents          = [];
+        regexpBraced         = new RegExp('\\[new_' + assoc + '\\](.*?\\s)', 'g'),
+        regexpUnderscord     = new RegExp('_new_' + assoc + '_(\\w*)', 'g'),
+        newId                = createNewId(),
+        newContent           = content.replace(regexpBraced, newContentBraced(newId)),
+        newContents          = [];
 
 
-    if (new_content == content) {
-      regexp_braced     = new RegExp('\\[new_' + assocs + '\\](.*?\\s)', 'g');
-      regexp_underscord = new RegExp('_new_' + assocs + '_(\\w*)', 'g');
-      new_content       = content.replace(regexp_braced, newcontent_braced(new_id));
+    if (newContent == content) {
+      regexpBraced     = new RegExp('\\[new_' + assocs + '\\](.*?\\s)', 'g');
+      regexpUnderscord = new RegExp('_new_' + assocs + '_(\\w*)', 'g');
+      newContent       = content.replace(regexpBraced, newContentBraced(newId));
     }
 
-    new_content = new_content.replace(regexp_underscord, newcontent_underscord(new_id));
-    new_contents = [new_content];
+    newContent = newContent.replace(regexpUnderscord, newContentUnderscord(newId));
+    newContents = [newContent];
 
     count = (isNaN(count) ? 1 : Math.max(count, 1));
     count -= 1;
 
     while (count) {
-      new_id      = create_new_id();
-      new_content = content.replace(regexp_braced, newcontent_braced(new_id));
-      new_content = new_content.replace(regexp_underscord, newcontent_underscord(new_id));
-      new_contents.push(new_content);
+      newId      = createNewId();
+      newContent = content.replace(regexpBraced, newContentBraced(newId));
+      newContent = newContent.replace(regexpUnderscord, newContentUnderscord(newId));
+      newContents.push(newContent);
 
       count -= 1;
     }
@@ -81,7 +81,7 @@
       console.warn("Couldn't find the element to insert the template. Make sure your `data-association-insertion-*` on `link_to_add_association` is correct.")
     }
 
-    $.each(new_contents, function(i, node) {
+    $.each(newContents, function(i, node) {
       var contentNode = $(node);
 
       insertionNodeElem.trigger('cocoon:before-insert', [contentNode]);
@@ -95,36 +95,36 @@
     });
   });
 
-  $(document).on('click', '.remove_fields.dynamic, .remove_fields.existing', function(e) {
+  $(document).on('click', '.remove-fields.dynamic, .remove-fields.existing', function(e) {
     var $this = $(this),
-        wrapper_class = $this.data('wrapper-class') || 'nested-fields',
-        node_to_delete = $this.closest('.' + wrapper_class),
-        trigger_node = node_to_delete.parent();
+        wrapperClass = $this.data('wrapper-class') || 'nested-fields',
+        nodeToDelete = $this.closest('.' + wrapperClass),
+        triggerNode = nodeToDelete.parent();
 
     e.preventDefault();
 
-    trigger_node.trigger('cocoon:before-remove', [node_to_delete]);
+    triggerNode.trigger('cocoon:before-remove', [nodeToDelete]);
 
-    var timeout = trigger_node.data('remove-timeout') || 0;
+    var timeout = triggerNode.data('remove-timeout') || 0;
 
     setTimeout(function() {
       if ($this.hasClass('dynamic')) {
-          node_to_delete.remove();
+          nodeToDelete.remove();
       } else {
           $this.prev("input[type=hidden]").val("1");
-          node_to_delete.hide();
+          nodeToDelete.hide();
       }
-      trigger_node.trigger('cocoon:after-remove', [node_to_delete]);
+      triggerNode.trigger('cocoon:after-remove', [nodeToDelete]);
     }, timeout);
   });
 
 
   $(document).on("ready page:load", function() {
-    $('.remove_fields.existing.destroyed').each(function(i, obj) {
+    $('.remove-fields.existing.destroyed').each(function(i, obj) {
       var $this = $(this),
-          wrapper_class = $this.data('wrapper-class') || 'nested-fields';
+          wrapperClass = $this.data('wrapper-class') || 'nested-fields';
 
-      $this.closest('.' + wrapper_class).hide();
+      $this.closest('.' + wrapperClass).hide();
     });
   });
 

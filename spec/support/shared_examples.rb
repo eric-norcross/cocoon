@@ -4,7 +4,7 @@ shared_examples_for "a correctly rendered add link" do |options|
     before do
       default_options = {
           href: '#',
-          class: 'add_fields',
+          class: 'add-fields',
           template: "form<tag>",
           association: 'comment',
           associations: 'comments',
@@ -46,7 +46,7 @@ shared_examples_for "a correctly rendered remove link" do |options|
     before do
       default_options = {
           href: '#',
-          class: 'remove_fields dynamic',
+          class: 'remove-fields dynamic',
           text: 'remove something',
           extra_attributes: {}
       }
